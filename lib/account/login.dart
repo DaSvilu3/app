@@ -3,7 +3,7 @@ import 'signup.dart';
 import 'resetpass.dart';
 import '../widgets/clipp.dart';
 import 'package:app/utils/auth.dart';
-import 'package:app/profile/index.dart';
+import 'package:app/home/index.dart';
 import 'package:app/utils/theme.dart';
 
 class Login extends StatefulWidget {
