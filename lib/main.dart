@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'widgets/clipp.dart';
 import 'account/login.dart';
+import 'package:app/utils/theme.dart';
 
 void main() => runApp(new MyApp());
 
@@ -11,9 +12,7 @@ class MyApp extends StatelessWidget {
     return new MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      theme: new ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: new ThemeData(primaryColor: themeColor),
       home: new Login(),
     );
   }
@@ -46,61 +45,65 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                   new Positioned(
-                    bottom: 0,
-                    left: 20.0,
-                    right: 20.0,
-                    height: 130.0,
-                    child: new Card(
-                      elevation: 10.0,
-                      child: new Container(
-
-                      padding: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
-                      child: new Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            new Container(
-                              margin: new EdgeInsets.symmetric(horizontal: 10.0),
-                              height: 60,
-                              width: 60,
-                              child: new CircleAvatar(
-                                backgroundColor: Colors.grey[600],
-                                child: new Icon(
-                                  Icons.person,
-                                  color: Colors.white,
-                                  size: 25.0,
+                      bottom: 0,
+                      left: 20.0,
+                      right: 20.0,
+                      height: 130.0,
+                      child: new Card(
+                        elevation: 10.0,
+                        child: new Container(
+                          padding: new EdgeInsets.symmetric(
+                              horizontal: 10.0, vertical: 15.0),
+                          child: new Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              new Container(
+                                margin:
+                                    new EdgeInsets.symmetric(horizontal: 10.0),
+                                height: 60,
+                                width: 60,
+                                child: new CircleAvatar(
+                                  backgroundColor: Colors.grey[600],
+                                  child: new Icon(
+                                    Icons.person,
+                                    color: Colors.white,
+                                    size: 25.0,
+                                  ),
                                 ),
                               ),
-                            ),
-                            new Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                new Text("Hello, Afraa", style: new TextStyle(color: Colors.grey[600], fontSize: 20.0, fontWeight: FontWeight.bold),),
-                                new Text("Welcome To Aman App", style: new TextStyle(color: Colors.grey,fontWeight: FontWeight.bold))
-                              ],
-                            )
-                          ],
+                              new Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  new Text(
+                                    "Hello, Afraa",
+                                    style: new TextStyle(
+                                        color: Colors.grey[600],
+                                        fontSize: 20.0,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  new Text("Welcome To Aman App",
+                                      style: new TextStyle(
+                                          color: Colors.grey,
+                                          fontWeight: FontWeight.bold))
+                                ],
+                              )
+                            ],
+                          ),
                         ),
-                      
-                    ),
-                  
-                    ))
+                      ))
                 ],
               ),
-              
               new Container(
                 margin: new EdgeInsets.symmetric(horizontal: 20.0),
                 width: MediaQuery.of(context).size.width - 40.0,
                 child: new Card(
-                child: new Column(
-                  children: <Widget>[
-                    new Text("ddd")
-                  ],
+                  child: new Column(
+                    children: <Widget>[new Text("ddd")],
+                  ),
                 ),
-              ),
               )
-            ]
-            ,
+            ],
           ),
         ));
   }

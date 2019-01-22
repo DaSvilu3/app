@@ -1,17 +1,13 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:app/utils/auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+
 class Signup extends StatefulWidget {
-
-
   @override
-  _Signup createState()=> new _Signup();
+  _Signup createState() => new _Signup();
 }
 
 class _Signup extends State<Signup> {
-
   TextEditingController firstName = new TextEditingController();
   TextEditingController lastName = new TextEditingController();
   TextEditingController emailAddress = new TextEditingController();
@@ -19,7 +15,6 @@ class _Signup extends State<Signup> {
   TextEditingController repassword = new TextEditingController();
   TextEditingController age = new TextEditingController();
   TextEditingController civilID = new TextEditingController();
-
 
   FirebaseDatabase firebaseDatabase = FirebaseDatabase.instance;
   @override
@@ -151,9 +146,8 @@ class _Signup extends State<Signup> {
                   ),
                 ),
               ),
-
               new InkWell(
-                onTap: (){
+                onTap: () {
                   register();
                 },
                 child: new Container(
@@ -178,19 +172,25 @@ class _Signup extends State<Signup> {
     );
   }
 
-  void register(){
+  void register() {
     Auth auth = new Auth();
-    auth.register(emailAddress.text, password.text).then((c){
+    auth.register(emailAddress.text, password.text).then((c) {
       print(c);
-      if(c != null){
+      if (c != null) {
         Map map = new Map.from({
-          "first_name" : firstName.text,
-          "last_name"  : lastName.text,
-          "email"      : emailAddress.text,
-          "age"        : age.text.toString(),
-          "civilID"    : civilID.text
+          "first_name": firstName.text,
+          "last_name": lastName.text,
+          "email": emailAddress.text,
+          "age": age.text.toString(),
+          "civilID": civilID.text
         });
-        firebaseDatabase.reference().child("users").child(c.toString()).child("info").set(map).then((c){
+        firebaseDatabase
+            .reference()
+            .child("users")
+            .child(c.toString())
+            .child("info")
+            .set(map)
+            .then((c) {
           Navigator.of(context).pop();
         });
       }

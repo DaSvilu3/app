@@ -4,6 +4,7 @@ import 'resetpass.dart';
 import '../widgets/clipp.dart';
 import 'package:app/utils/auth.dart';
 import 'package:app/profile/index.dart';
+import 'package:app/utils/theme.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -13,13 +14,28 @@ class Login extends StatefulWidget {
 class _Login extends State<Login> {
   TextEditingController email = new TextEditingController();
   TextEditingController password = new TextEditingController();
+  final GlobalKey<ScaffoldState> _scaffolkey = new GlobalKey();
   BaseAuth auth = new Auth();
+  bool isLoading = false;
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    auth.currentUser().then((id){
+      navigateTo(Profile(), false);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     double height = MediaQuery.of(context).size.height;
     return new Scaffold(
-      backgroundColor: Colors.grey[300],
+      key: _scaffolkey,
+      backgroundColor: bgColor,
       body: new Padding(
         padding: new EdgeInsets.all(10.0),
         child: new SingleChildScrollView(
@@ -28,9 +44,21 @@ class _Login extends State<Login> {
               new SizedBox(
                 height: height * 0.15,
               ),
-              new Text("Welcome", style: new TextStyle(fontSize: 25.0, color: Colors.red),),
+              new Text(
+                "Welcome",
+                style: new TextStyle(fontSize: 25.0, color: Colors.red),
+              ),
               new SizedBox(
                 height: 30.0,
+              ),
+              new Container(
+                height: 30.0,
+                margin: new EdgeInsets.all(10.0),
+                child: new Center(
+                  child: isLoading
+                      ? new CircularProgressIndicator()
+                      : new Container(),
+                ),
               ),
               new Container(
                 padding: new EdgeInsets.only(left: 5.0, top: 2.0, right: 20.0),
@@ -82,10 +110,22 @@ class _Login extends State<Login> {
                 ),
               ),
               new InkWell(
-                onTap: (){
-                  auth.signInWithEmailAndPassword(email.text, password.text).then((uid){
-                    if(uid != null){
+                onTap: () {
+                  setState(() {
+                    isLoading = true;
+                  });
+                  auth
+                      .signInWithEmailAndPassword(email.text, password.text)
+                      .then((uid) {
+                    setState(() {
+                      isLoading = false;
+                    });
+                    if (uid != null) {
                       navigateTo(Profile(), false);
+                    } else {
+                      _scaffolkey.currentState.showSnackBar(new SnackBar(
+                          content: new Text(
+                              "The password is invalid or the user does not have a password")));
                     }
                   });
                 },
@@ -94,7 +134,7 @@ class _Login extends State<Login> {
                   height: 60.0,
                   decoration: new BoxDecoration(
                       borderRadius: new BorderRadius.circular(20.0),
-                      color: Colors.red),
+                      color: themeColor),
                   child: new Center(
                     child: new Text(
                       "Sign in",
@@ -129,7 +169,7 @@ class _Login extends State<Login> {
                     "SIGN UP NOW",
                     textAlign: TextAlign.center,
                     style: new TextStyle(
-                        color: Colors.red,
+                        color: themeColor,
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold),
                   ),
@@ -142,7 +182,8 @@ class _Login extends State<Login> {
     );
   }
 
-  void navigateTo(Widget widger, bool isfull){
-    Navigator.of(context).push(new MaterialPageRoute(builder: (context)=> widger,fullscreenDialog: isfull));
+  void navigateTo(Widget widger, bool isfull) {
+    Navigator.of(context).push(new MaterialPageRoute(
+        builder: (context) => widger, fullscreenDialog: isfull));
   }
 }

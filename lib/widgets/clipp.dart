@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class CustomShapeClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
@@ -29,8 +28,6 @@ class CustomShapeClipper extends CustomClipper<Path> {
     // TODO: implement shouldReclip
     return true;
   }
-
-
 }
 
 /*

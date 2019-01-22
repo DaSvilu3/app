@@ -11,35 +11,41 @@ class _ResetPass extends State<ResetPass> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    
-    Widget content ;
-    if(isDone){
+
+    Widget content;
+    if (isDone) {
       content = new Container(
         width: MediaQuery.of(context).size.width,
         child: new Column(
           crossAxisAlignment: CrossAxisAlignment.center,
-
           children: <Widget>[
-            new SizedBox(height: 50.0,),
+            new SizedBox(
+              height: 50.0,
+            ),
             new Container(
               width: MediaQuery.of(context).size.width - 40.0,
               child: new Card(
                 elevation: 5.0,
                 child: new Container(
-                  padding: new EdgeInsets.symmetric(horizontal: 16.0, vertical: 40.0),
+                  padding: new EdgeInsets.symmetric(
+                      horizontal: 16.0, vertical: 40.0),
                   child: new Column(
                     children: <Widget>[
-
-                      new Icon(Icons.check_circle, color: Colors.green,),
-                      new Text("Your new password has been sent to your email address " + emailAddress.text),
-
+                      new Icon(
+                        Icons.check_circle,
+                        color: Colors.green,
+                      ),
+                      new Text(
+                          "Your new password has been sent to your email address " +
+                              emailAddress.text),
                     ],
                   ),
                 ),
               ),
             ),
-            new InkWell(//mazoonapp
-              onTap: (){
+            new InkWell(
+              //mazoonapp
+              onTap: () {
                 Navigator.of(context).pop();
               },
               child: new Container(
@@ -60,7 +66,7 @@ class _ResetPass extends State<ResetPass> {
           ],
         ),
       );
-    }else {
+    } else {
       content = new Container(
         child: new SingleChildScrollView(
           child: new Column(
@@ -94,7 +100,7 @@ class _ResetPass extends State<ResetPass> {
                 height: 5.0,
               ),
               new InkWell(
-                onTap: (){
+                onTap: () {
                   setState(() {
                     isDone = true;
                   });
@@ -121,11 +127,10 @@ class _ResetPass extends State<ResetPass> {
     }
 
     return new Scaffold(
-      backgroundColor: Colors.grey[200],
-      appBar: new AppBar(
-        title: new Text("Reset Password"),
-      ),
-      body: content
-    );
+        backgroundColor: Colors.grey[200],
+        appBar: new AppBar(
+          title: new Text("Reset Password"),
+        ),
+        body: content);
   }
 }
