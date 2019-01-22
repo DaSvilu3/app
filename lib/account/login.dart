@@ -3,6 +3,7 @@ import 'signup.dart';
 import 'resetpass.dart';
 import '../widgets/clipp.dart';
 import 'package:app/utils/auth.dart';
+import 'package:app/profile/index.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -72,7 +73,7 @@ class _Login extends State<Login> {
                 margin: new EdgeInsets.symmetric(vertical: 20.0),
                 child: new InkWell(
                   onTap: () {
-                    navigateTo(ResetPass());
+                    navigateTo(ResetPass(), true);
                   },
                   child: new Text(
                     "Forget your password",
@@ -83,7 +84,9 @@ class _Login extends State<Login> {
               new InkWell(
                 onTap: (){
                   auth.signInWithEmailAndPassword(email.text, password.text).then((uid){
-                    print(uid);
+                    if(uid != null){
+                      navigateTo(Profile(), false);
+                    }
                   });
                 },
                 child: new Container(
@@ -120,7 +123,7 @@ class _Login extends State<Login> {
                 margin: new EdgeInsets.only(top: 40.0),
                 child: new InkWell(
                   onTap: () {
-                    navigateTo(Signup());
+                    navigateTo(Signup(), true);
                   },
                   child: new Text(
                     "SIGN UP NOW",
@@ -139,7 +142,7 @@ class _Login extends State<Login> {
     );
   }
 
-  void navigateTo(Widget widger){
-    Navigator.of(context).push(new MaterialPageRoute(builder: (context)=> widger,fullscreenDialog: true));
+  void navigateTo(Widget widger, bool isfull){
+    Navigator.of(context).push(new MaterialPageRoute(builder: (context)=> widger,fullscreenDialog: isfull));
   }
 }

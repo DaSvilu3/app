@@ -1,7 +1,8 @@
 
 
 import 'package:flutter/material.dart';
-
+import 'package:app/utils/auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 class Signup extends StatefulWidget {
 
 
@@ -19,6 +20,8 @@ class _Signup extends State<Signup> {
   TextEditingController age = new TextEditingController();
   TextEditingController civilID = new TextEditingController();
 
+
+  FirebaseDatabase firebaseDatabase = FirebaseDatabase.instance;
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -149,17 +152,22 @@ class _Signup extends State<Signup> {
                 ),
               ),
 
-              new Container(
-                margin: new EdgeInsets.only(top: 30.0),
-                width: MediaQuery.of(context).size.width / 2.0,
-                height: 60.0,
-                decoration: new BoxDecoration(
-                    borderRadius: new BorderRadius.circular(20.0),
-                    color: Colors.red),
-                child: new Center(
-                  child: new Text(
-                    "Register",
-                    style: new TextStyle(color: Colors.white, fontSize: 20.0),
+              new InkWell(
+                onTap: (){
+                  register();
+                },
+                child: new Container(
+                  margin: new EdgeInsets.only(top: 30.0),
+                  width: MediaQuery.of(context).size.width / 2.0,
+                  height: 60.0,
+                  decoration: new BoxDecoration(
+                      borderRadius: new BorderRadius.circular(20.0),
+                      color: Colors.red),
+                  child: new Center(
+                    child: new Text(
+                      "Register",
+                      style: new TextStyle(color: Colors.white, fontSize: 20.0),
+                    ),
                   ),
                 ),
               ),
@@ -168,5 +176,24 @@ class _Signup extends State<Signup> {
         ),
       ),
     );
+  }
+
+  void register(){
+    Auth auth = new Auth();
+    auth.register(emailAddress.text, password.text).then((c){
+      print(c);
+      if(c != null){
+        Map map = new Map.from({
+          "first_name" : firstName.text,
+          "last_name"  : lastName.text,
+          "email"      : emailAddress.text,
+          "age"        : age.text.toString(),
+          "civilID"    : civilID.text
+        });
+        firebaseDatabase.reference().child("users").child(c.toString()).child("info").set(map).then((c){
+          Navigator.of(context).pop();
+        });
+      }
+    });
   }
 }
